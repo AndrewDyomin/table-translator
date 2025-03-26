@@ -58,9 +58,10 @@ async function addToDb() {
         },
       });
       newItems += 1;
+      console.log(`Added ${newItems} new items.`);
     }
-    console.log(`Added ${newItems} new items.`);
   }
+  console.log('addToDb finished =)')
 }
 
 addToDb();
