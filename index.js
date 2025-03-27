@@ -86,7 +86,7 @@ async function latinACheck() {
 
 async function addGermanInfo() {
   const workbook = xlsx.readFile(
-    "../table-translator/for_import/Mirco_Artikel_UA_1.xlsb"
+    "./for_import/Mirco_Artikel_UA_1.xlsb"
   );
   const itemsArray = read(workbook);
   
