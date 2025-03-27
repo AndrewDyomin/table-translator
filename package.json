@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "cross-env NODE_ENV=production node ./server.js",
+    "start": "cross-env NODE_ENV=production node ./index.js",
     "start:dev": "cross-env NODE_ENV=development nodemon ./index.js",
     "lint": "eslint **/*.js",
     "lint:fix": "eslint --fix **/*.js"
