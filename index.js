@@ -1,9 +1,13 @@
 require("./db");
+const xlsx = require("xlsx");
 const read = require("./operations/read-excel");
 const Item = require("./models/item");
 
 async function addToDb() {
-  const itemsArray = read();
+  const workbook = xlsx.readFile(
+    "../table-translator/for_import/21.03.2025.xlsx"
+  );
+  const itemsArray = read(workbook);
   let newItems = 0;
 
   for (const element of itemsArray) {
@@ -64,4 +68,36 @@ async function addToDb() {
   console.log('addToDb finished =)')
 }
 
-addToDb();
+async function latinACheck() { 
+  const targetArray = await Item.find({ art: { $regex: "А", $options: "i" } }).exec();
+
+  console.log(`We finded ${targetArray.length} targets.`);
+
+  for (const item of targetArray) {
+    const newArt = item.art.replace(/А/g, "A");
+
+    await Item.updateOne({ _id: item._id }, { $set: { art: newArt } });
+    
+    console.log(`Updated ${item._id}: "${item.art}" → "${newArt}"`);
+  }
+
+  console.log("Update complited! :)");
+}
+
+async function addGermanInfo() {
+  const workbook = xlsx.readFile(
+    "../table-translator/for_import/Mirco_Artikel_UA_1.xlsb"
+  );
+  const itemsArray = read(workbook);
+  
+  for (const item of itemsArray) {
+    const art = item['Артикул'];
+    const target = await Item.findOne({ art }).exec()
+    console.log(target)
+    break
+  }
+}
+
+// addToDb();
+// latinACheck();
+addGermanInfo()

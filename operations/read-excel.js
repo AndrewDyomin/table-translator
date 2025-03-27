@@ -1,11 +1,10 @@
 const xlsx = require("xlsx");
 
-const workbook = xlsx.readFile("../table-translator/for_import/21.03.2025.xlsx");
-const sheetName = workbook.SheetNames[0];
-const sheet = workbook.Sheets[sheetName];
-const range = xlsx.utils.decode_range(sheet["!ref"]);
-
-function Read() {
+function Read(workbook) {
+  
+  const sheetName = workbook.SheetNames[0];
+  const sheet = workbook.Sheets[sheetName];
+  const range = xlsx.utils.decode_range(sheet["!ref"]);
   const headers = [];
   for (let col = range.s.c; col <= range.e.c; col++) {
     const cellAddress = xlsx.utils.encode_cell({ r: range.s.r, c: col });
@@ -34,6 +33,6 @@ function Read() {
   }
 
   return data;
-};
+}
 
 module.exports = Read;
